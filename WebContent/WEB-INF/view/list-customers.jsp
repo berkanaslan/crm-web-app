@@ -19,6 +19,12 @@
 	
 	<div id="container">
 		<div id="content">
+		
+		<!--  Put new button: Add Customer -->
+		<input type="button" value="Add Customer"
+			onClick="window.location.href='showFormForAdd'; return false;"
+			class="add-button"/>
+					
 		<!-- Add out HTML table here -->
 		
 		<table>
@@ -38,9 +44,7 @@
 			</c:forEach>
 		</table>
 		</div>
+		
 	</div>
-	
-	
-	
 </body>
 </html>
