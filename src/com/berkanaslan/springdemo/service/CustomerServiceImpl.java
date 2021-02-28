@@ -16,13 +16,16 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private CustomerDAO customerDAO;
 	
-	
-	
-	
 	@Override
 	@Transactional
 	public List<Customer> getCustomers() {
 		return customerDAO.getCustomers();
+	}
+
+	@Override
+	@Transactional
+	public void saveCustomer(Customer theCustomer) {
+		customerDAO.saveCustomer(theCustomer);		
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.context.spi.CurrentSessionContext;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +34,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 		// Return the results
 		return customers;
 		
+	}
+
+	@Override
+	public void saveCustomer(Customer theCustomer) {
+		// Get current Hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		// Save the customer
+		currentSession.save(theCustomer);
 	}
 
 }
