@@ -41,13 +41,6 @@
 						</tbody>
 					</table>
 				</form:form>
-				
-				<div style="clear; both;"></div>
-				
-				<p>
-					<a href="${pageContext.request.contextPage}/customer/list">Back to the list</a>
-				</p>
-				
 			</div>
 		</div>
 	</body>
