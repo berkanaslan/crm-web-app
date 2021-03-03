@@ -18,29 +18,29 @@ public class CustomerDAOImpl implements CustomerDAO {
 	// Need to inject the session factory
 	@Autowired
 	private SessionFactory sessionFactory;
-	
+
 	@Override
 	public List<Customer> getCustomers() {
-		
+
 		// Get the current Hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// Create a query
 		Query<Customer> theQuery = currentSession.createQuery("from Customer order by lastName", Customer.class);
-		
+
 		// Execute query and get result list
 		List<Customer> customers = theQuery.getResultList();
-		
+
 		// Return the results
 		return customers;
-		
+
 	}
 
 	@Override
 	public void saveCustomer(Customer theCustomer) {
 		// Get current Hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// Save the customer
 		currentSession.saveOrUpdate(theCustomer);
 	}
@@ -49,8 +49,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public Customer getCustomer(int customerId) {
 		// Get current Hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
-		//Get customer
+
+		// Get customer
 		return currentSession.get(Customer.class, customerId);
 	}
 
@@ -58,12 +58,36 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public void deleteCustomer(int id) {
 		// Get current Hibernate session
 		Session currentSession = sessionFactory.getCurrentSession();
-		
+
 		// Delete the customer
 		Query query = currentSession.createQuery("delete from Customer where id=:customerId");
 		query.setParameter("customerId", id);
-		
-		query.executeUpdate();		
+
+		query.executeUpdate();
 	}
 
+	@Override
+	public List<Customer> searchCustomers(String theSearchName) {
+		// get the current hibernate session
+		Session currentSession = sessionFactory.getCurrentSession();
+
+		Query theQuery = null;
+
+		if (theSearchName != null && theSearchName.trim().length() > 0) {
+			// search for firstName or lastName ... case insensitive
+			theQuery = currentSession.createQuery(
+					"from Customer where lower(firstName) like :theName or lower(lastName) like :theName",
+					Customer.class);
+			theQuery.setParameter("theName", "%" + theSearchName.toLowerCase() + "%");
+		} else {
+			// theSearchName is empty ... so just get all customers
+			theQuery = currentSession.createQuery("from Customer", Customer.class);
+		}
+
+		// execute query and get result list
+		List<Customer> customers = theQuery.getResultList();
+
+		// return the results
+		return customers;
+	}
 }
