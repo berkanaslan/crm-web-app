@@ -5,8 +5,9 @@ import java.util.List;
 import com.berkanaslan.springdemo.entity.Customer;
 
 public interface CustomerService {
-	public List<Customer> getCustomers();
-	public void saveCustomer(Customer theCustomer);
-	public Customer getCustomer(int customerId);
+	List<Customer> getCustomers();
+	void saveCustomer(Customer theCustomer);
+	Customer getCustomer(int customerId);
+	void deleteCustomer(int id);
 }
  
